@@ -1,26 +1,51 @@
-import { View, Text, StyleSheet, SafeAreaView, Image, StatusBar, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
-import Entypo from "react-native-vector-icons/Entypo";
+import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions,} from 'react-native'
+import React, { useState } from 'react'
+import Entypo from "react-native-vector-icons/Entypo"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import Feather from "react-native-vector-icons/Feather"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import Comments from './Comments';
+import {  IPost } from '../types/models';
+import ImageCarousel from './ImageCarousel'
 
-const Post: any = ({ data }) => {
-  // console.log(post.id)
+
+interface IPostProps{
+  data:IPost
+}
+
+
+const Post = ({data}:IPostProps) => {
+  const [isDescriptionExpanded,setIsDescriptionExpanded]=useState(false)
+  const [isLiked,setIsLiked]=useState(false)
+
+const Liked=()=>{
+  setIsLiked(!isLiked)
+ } 
+let content=null;
+if(data.image){
+  content=(<Image
+    source={{ uri: data.image }}
+    style={styles.postimg}
+    resizeMode={"contain"}
+  />)
+}else if(data.images){
+content=(<ImageCarousel images={data.images}/>)
+}
+
+const toggleDescriptionExpanded=() => {
+  setIsDescriptionExpanded(!isDescriptionExpanded);
+}
   const avatar = "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
-
   return (
     <>
       {/*header*/}
-
       <View style={styles.header}>
         <Image
-          source={{ uri: data.user.image }}
+          source={{uri: data.user.image}}
           style={styles.img}
         />
         <Text style={styles.name}>{data?.user?.username}</Text>
-        <TouchableOpacity style={{ marginLeft: "auto" }}>
+        <TouchableOpacity style={{ marginLeft: "auto"}}>
           <Entypo name={"dots-three-horizontal"} size={16}
             style={styles.dots}
           />
@@ -28,21 +53,23 @@ const Post: any = ({ data }) => {
       </View>
 
       {/*image*/}
-      <Image
-        source={{ uri: data.image }}
-        style={styles.postimg}
-        resizeMode={"contain"}
-      />
+      {content}
+      
 
       {/*footer*/}
       <View style={styles.footer}>
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={Liked}
+        >  
+          
           <AntDesign
-            name={'hearto'}
-            size={24}
-            style={styles.icon}
-            color={"black"}
-          />
+          name={isLiked?'heart':'hearto'}
+          size={24}
+          style={styles.icon}
+          color={isLiked?"#ED4956":"black"}
+         />
+     
+          
         </TouchableOpacity>
         <TouchableOpacity>
           <Ionicons
@@ -70,8 +97,7 @@ const Post: any = ({ data }) => {
         </TouchableOpacity>
       </View>
 
-    {/*likes */}
-
+      {/*likes */}
       <View style={styles.likes}>
         <Image
           source={{ uri: data.user.image }}
@@ -86,18 +112,34 @@ const Post: any = ({ data }) => {
           style={styles.avatar3}
         />
         <View>
-          <Text>Liked by <Text style={styles.name}>{data.comments.username}</Text> and <Text style={styles.name}>{data.nofLikes} others </Text> </Text>
+          <Text>Liked by <Text style={styles.name}>mustafa</Text> and <Text style={styles.name}>{data.nofLikes} others </Text> </Text>
         </View>
       </View>
-      
+
+      {/*description */}
       <View style={styles.comment_area}>
-        <Text><Text style={{ fontWeight: "600", marginLeft: "2.5%", }}>{data.user.username}</Text>
-          <Text style={styles.caption}>  {data.description}</Text></Text>
-        
+        <Text  numberOfLines={isDescriptionExpanded?0:3}><Text style={{ fontWeight: "600", marginLeft: "2.5%", }}>{data?.user?.username}</Text>
+          <Text style={styles.caption} >{" "}{data.description}</Text></Text>
+          <Text onPress={toggleDescriptionExpanded} style={{color:"grey"}} >{isDescriptionExpanded?"less":"more"}</Text>
+
 
 
       </View>
-      <Comments/>
+    
+      {/*Comments */}    
+      <Text style={{ color: "grey", marginTop: "2%",marginLeft:"2%" }}>view all {data.nofComments} comments</Text>
+     {data.comments?.map((comment:any) => (
+    <Comments
+    title={comment.user.username}
+    comment={comment.comment}
+    data={comment}
+
+    />
+      ))}
+
+
+      {/*createdAt*/}
+
       <Text style={{ color: "grey", marginTop: "2%", padding: "2%" }}>13 November 2022</Text>
 
     </>
@@ -108,7 +150,7 @@ const Post: any = ({ data }) => {
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
-    padding: "4%",
+    padding: "2%",
     paddingTop: "10%",
     alignItems: "center"
   },
@@ -128,7 +170,7 @@ const styles = StyleSheet.create({
   },
   postimg: {
     width: "100%",
-    aspectRatio: 4 / 3
+    aspectRatio: 4/3
   },
   footer: {
     flexDirection: 'row',
@@ -183,7 +225,7 @@ const styles = StyleSheet.create({
   comment_area: {
     padding: "2%",
   },
-  
+
 })
 
 export default Post

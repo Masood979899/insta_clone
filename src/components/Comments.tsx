@@ -1,26 +1,41 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import AntDesign from "react-native-vector-icons/AntDesign"
+import { IComment } from '../types/models'
 
-const Comments = () => {
+interface ICommentProps{
+  data:IComment
+}
+
+
+
+const Comments = ({data}:ICommentProps) => {
+  
   return (
-    <View>
-     <Text style={{ color: "grey", marginTop: "2%" }}>view all 19 comments</Text>
+    <>
+    <View style={styles.root}>      
         <View style={styles.comment}>
-          <Text><Text style={{ fontWeight: "600" }}>masoood</Text>
-            <Text style={{}}> yayy keep it up </Text>
+          <Text style={{flex:1}}><Text style={{ fontWeight: "600" }}>{data.user.username}{"  "}</Text>
+            <Text style={{alignItems:"center"}}>{data.comment}</Text>
           </Text>
-          <TouchableOpacity style={{ marginLeft: "auto" }}>
-            <AntDesign name={"hearto"} size={18} style={styles.icon}
+          <TouchableOpacity style={{ marginLeft:"auto"}}>
+            <AntDesign name={"hearto"} size={15} style={styles.icon}
             />
           </TouchableOpacity>
         </View>
+   
     </View>
-  )
+</>
+)
 }
 const styles = StyleSheet.create({
-    icon: {
+  root:{
+    // padding:"2%"
+    marginHorizontal:"3%"
+  },  
+  icon: {
         marginHorizontal: "0.5%"
+        
     
       },
       comment: {

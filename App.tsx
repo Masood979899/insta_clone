@@ -1,14 +1,14 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import Post from './src/components/Post'
-import data from "./src/data/post"
+import { Home } from './src/containers'
 const App = () => {
 
-console.log(data)
 
   return (
     <View style={styles.container}>
-      <Post data={data}/>
+      <Home
+      />
     </View>
   )
 }

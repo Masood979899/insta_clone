@@ -24,7 +24,15 @@ const data = {
      user: {
       username: 'vadimnotjustdev',
      },
-    },
+     
+    },{
+        id: '3',
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. H',
+        user: {
+         username: 'kashir_official',
+        },
+        
+       },
     ],
    };
    export default data
