@@ -1,14 +1,15 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import Post from './src/components/Post'
-import { Home } from './src/containers'
+import { CommentScreen, Home } from './src/containers'
 const App = () => {
 
 
   return (
     <View style={styles.container}>
-      <Home
-      />
+      {/* <Home
+      /> */}
+      <CommentScreen/>
     </View>
   )
 }

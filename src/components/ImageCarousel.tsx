@@ -1,38 +1,41 @@
-import {View, Text, FlatList, Image, useWindowDimensions} from 'react-native';
+import {View, Text, FlatList, Image, useWindowDimensions, ViewabilityConfig, ViewToken} from 'react-native';
 import React, { useRef, useState } from 'react';
 import colors from '../theme/colors';
+import DoublePress from './DoublePress';
 
 interface ICarousel {
   images: string[];
+  onDoublePress?:()=>void;
+  
 }
 
-const ImageCarousel = ({images}: ICarousel) => {
+const ImageCarousel = ({images,onDoublePress}: ICarousel) => {
   const {width} = useWindowDimensions();
   const [activeImageIndex,setActiveImageIndex] =useState(0);
   
-const onviewabilityConfig={
+const viewabilityConfig: ViewabilityConfig={
     itemVisiblePercentThreshold:51,
 }
-const onViewableItemsChanged= useRef(({viewableItems})=>{
+const onViewableItemsChanged= useRef(({viewableItems}:{viewableItems:Array<ViewToken>})=>{
     if(viewableItems.length > 0){
-        setActiveImageIndex(viewableItems[0].index);
+        setActiveImageIndex(viewableItems[0].index ||0);
     }
 })
 
-
-
-  console.log(images);
   return (
     <View>
       <FlatList
         data={images}
         renderItem={({item}) => (
+          <DoublePress onDoublePress={onDoublePress}>
           <Image source={{uri: item}} style={{width, aspectRatio: 1/1}} />
+          </DoublePress>
+        
         )}
         horizontal={true}
         pagingEnabled
         onViewableItemsChanged={onViewableItemsChanged.current}
-        viewabilityConfig={onviewabilityConfig}
+        viewabilityConfig={viewabilityConfig}
       />
       <View
         style={{
