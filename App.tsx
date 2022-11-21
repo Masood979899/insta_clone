@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import Post from './src/components/Post'
-import { CommentScreen, Home } from './src/containers'
+import { CommentScreen, Home, Profile } from './src/Containers'
+import EditProfileScreen from './src/Containers/EditProfileScreen'
 const App = () => {
 
 
@@ -9,7 +10,9 @@ const App = () => {
     <View style={styles.container}>
       {/* <Home
       /> */}
-      <CommentScreen/>
+      {/* <CommentScreen/> */}
+      {/* <Profile/> */}
+      <EditProfileScreen/>
     </View>
   )
 }

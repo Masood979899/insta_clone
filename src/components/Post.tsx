@@ -127,7 +127,7 @@ const Post = ({data,isVisible}: IPostProps) => {
       {/*description */}
       <View style={styles.comment_area}>
         <Text numberOfLines={isDescriptionExpanded ? 0 : 3}>
-          <Text style={{fontWeight: '600', marginLeft: '2.5%'}}>
+          <Text style={{fontWeight: '600', marginLeft: '2.5%',color:"black"}}>
             {data?.user?.username}
           </Text>
           <Text style={styles.caption}> {data.description}</Text>
@@ -223,6 +223,7 @@ const styles = StyleSheet.create({
   },
   caption: {
     fontSize: 15,
+    color:"black"
   },
   add_comment: {
     flexDirection: 'row',

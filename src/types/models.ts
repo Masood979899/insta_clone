@@ -1,3 +1,7 @@
+
+
+
+
 export interface IPost {
     id: string;
     createdAt: string;
@@ -25,4 +29,5 @@ export interface IPost {
     id: string;
     comment: string;
     user: IUser;
+    includes:boolean
    }
