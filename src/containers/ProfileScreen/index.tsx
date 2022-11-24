@@ -4,12 +4,21 @@ import Buttons from '../../components/Buttons'
 import user from '../../data/user.json'
 import ProfileHeader from '../../components/ProfileHeader'
 import FeedGridView from '../../components/FeedGridView'
-const Profile = () => {
+import navigation from '../..'
+import { useNavigation } from '@react-navigation/native'
+const Profile = ({route}) => {
+  
+  const navigation =  useNavigation()
+  const {name,image}=route.params;
+  // console.log(name,image)
+  navigation.setOptions({title:name})
   return (
     <View style={styles.container}>
       <FeedGridView
       data={user.posts}
-      listHeaderComponent={ProfileHeader}
+      name={name}
+      image={image}
+      listHeaderComponent={ProfileHeader(name,image)}
       />
 
 

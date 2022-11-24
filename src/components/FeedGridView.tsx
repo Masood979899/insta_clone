@@ -6,10 +6,13 @@ import FeedGridItem from './FeedGridItem';
 
 interface IfeedGrid{
     data: IPost;
+    name: string;
+    image?: string;
 }
 
 
-const FeedGridView = ({data,listHeaderComponent}:IfeedGrid) => {
+const FeedGridView = ({data,listHeaderComponent,name,image}:IfeedGrid) => {
+ 
   return (
 
     <FlatList
@@ -18,6 +21,7 @@ const FeedGridView = ({data,listHeaderComponent}:IfeedGrid) => {
         renderItem={({item}) => 
         <FeedGridItem
         post={item}
+        
         />
           }
           numColumns={3}

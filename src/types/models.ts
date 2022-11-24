@@ -3,6 +3,7 @@
 
 
 export interface IPost {
+    username: string;
     id: string;
     createdAt: string;
     image?: string;

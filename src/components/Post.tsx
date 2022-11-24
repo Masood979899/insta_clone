@@ -16,6 +16,7 @@ import {IPost} from '../types/models';
 import ImageCarousel from './ImageCarousel';
 import VideoPlayer from './VideoPlayer';
 import DoublePress from './DoublePress';
+import { useNavigation } from '@react-navigation/native';
 
 interface IPostProps {
   data: IPost;
@@ -24,6 +25,8 @@ interface IPostProps {
 }
 
 const Post = ({data,isVisible}: IPostProps) => {
+
+  const navigation=useNavigation()
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
@@ -66,8 +69,15 @@ const Post = ({data,isVisible}: IPostProps) => {
     <>
       {/*header*/}
       <View style={styles.header}>
+        <TouchableOpacity 
+        onPress={()=>navigation.navigate("ProfileScreen",{
+          name:data?.user?.username,
+          image:data?.user?.image,
+        })}
+        style={{flexDirection:"row",alignItems:"center"}}>
         <Image source={{uri: data.user.image}} style={styles.img} />
         <Text style={styles.name}>{data?.user?.username}</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={{marginLeft: 'auto'}}>
           <Entypo
             name={'dots-three-horizontal'}
@@ -138,7 +148,7 @@ const Post = ({data,isVisible}: IPostProps) => {
       </View>
 
       {/*Comments */}
-      <Text style={{color: 'grey', marginTop: '2%', marginLeft: '2%'}}>
+      <Text onPress={()=>navigation.navigate("Comments")} style={{color: 'grey', marginTop: '2%', marginLeft: '2%',}}>
         view all {data.nofComments} comments
       </Text>
       {data.comments?.map((comment: any) => (

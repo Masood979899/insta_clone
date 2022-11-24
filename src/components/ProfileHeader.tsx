@@ -4,12 +4,21 @@ import React from 'react'
 import Buttons from './Buttons'
 import user from '../data/user.json'
 
-const ProfileHeader = () => {
+interface IProfHeader{
+  name: string,
+  image: string
+}
+
+
+const ProfileHeader = (name:IProfHeader,image:IProfHeader) => {
+  
+  console.log(name,image)
+  
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Image
-        source={{uri:"https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.jpg"}}
+        source={{uri:image}}
         style={styles.image}
         />
 
@@ -27,10 +36,15 @@ const ProfileHeader = () => {
         </View>
       </View>
       <View>
-      <Text style={styles.username}>{user.name}</Text>
+        {name?
+      <Text style={styles.username}>{name}</Text>
+      :  
+      <Text style={styles.username}>Vadim</Text>
+
+}
       <Text style={styles.bio}>{user.bio}</Text>
       </View>
-      <View style={{flexDirection:"row",}}>
+      <View style={{flexDirection:"row"}}>
       <Buttons 
       text='Edit Profile'
 
